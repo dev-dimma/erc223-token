@@ -20,7 +20,10 @@ contract GoodReceiver is IERC223Recipient {
 
 contract BadReceiver {
     uint256 public dummy;
-    function doSomething() external { dummy = 1; }
+
+    function doSomething() external {
+        dummy = 1;
+    }
 }
 
 contract RejectingReceiver is IERC223Recipient {

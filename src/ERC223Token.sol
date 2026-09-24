@@ -19,11 +19,25 @@ contract ERC223Token is IERC223 {
         emit Transfer(address(0), msg.sender, initialSupply, "");
     }
 
-    function name() external view override returns (string memory) { return _name; }
-    function symbol() external view override returns (string memory) { return _symbol; }
-    function decimals() external view override returns (uint8) { return _decimals; }
-    function totalSupply() external view override returns (uint256) { return _totalSupply; }
-    function balanceOf(address _owner) external view override returns (uint256) { return _balances[_owner]; }
+    function name() external view override returns (string memory) {
+        return _name;
+    }
+
+    function symbol() external view override returns (string memory) {
+        return _symbol;
+    }
+
+    function decimals() external view override returns (uint8) {
+        return _decimals;
+    }
+
+    function totalSupply() external view override returns (uint256) {
+        return _totalSupply;
+    }
+
+    function balanceOf(address _owner) external view override returns (uint256) {
+        return _balances[_owner];
+    }
 
     function transfer(address _to, uint256 _value) external override returns (bool) {
         return _transfer(msg.sender, _to, _value, "");
@@ -42,7 +56,10 @@ contract ERC223Token is IERC223 {
 
         if (_isContract(_to)) {
             bytes4 magic = IERC223Recipient(_to).tokenReceived(_from, _value, _data);
-            require(magic == bytes4(keccak256("tokenReceived(address,uint256,bytes)")), "ERC223: invalid tokenReceived return value");
+            require(
+                magic == bytes4(keccak256("tokenReceived(address,uint256,bytes)")),
+                "ERC223: invalid tokenReceived return value"
+            );
         }
 
         emit Transfer(_from, _to, _value, _data);
